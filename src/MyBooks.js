@@ -2,15 +2,6 @@ import React ,{Component} from 'react';
 
 class MyBooks extends Component {
 
-
-
-
-
-
- 
-
-  
-
     render() {
         //apply filter on each shelf
     const curentlyReadingBooks = this.props.myBooks.filter(book => book.shelf === 'currentlyReading');
