@@ -13,8 +13,7 @@ class BooksList extends Component {
           
         return (
             <div>
-                <div className="bookshelf-books">
-              <ol className="books-grid">
+        
                  <div className="bookshelf">
             <h2 className="bookshelf-title">Currently Reading</h2>
                 <MyBooks 
@@ -23,6 +22,8 @@ class BooksList extends Component {
                 />
 
             </div>
+            
+        
             <div className="bookshelf">
             <h2 className="bookshelf-title">wantToRead</h2>
                 <MyBooks 
@@ -31,17 +32,20 @@ class BooksList extends Component {
                 />
                 
             </div>
+    
+            
             <div className="bookshelf">
             <h2 className="bookshelf-title">Read</h2>
                 <MyBooks 
                     onUpdateShelf={this.props.onUpdateShelf}
                     myBooks={readBooks}
-                    checkThumbnail={this.props.checkThumbnail}
+            
                 />
                 
             </div>
-            </ol>
-            </div>
+            
+        
+            
             
             </div>
         )

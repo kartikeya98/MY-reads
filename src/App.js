@@ -46,22 +46,14 @@ componentDidMount() {
                       error : true,
                       searchedBooks : [],
                   })
-              } else {
-                const combinedResults = results.map(result => {
-                  const filterList = this.state.books.filter(book => book.id === result.id);
-                  if (filterList.length > 0)
-                  { 
-                    result.shelf = filterList[0].shelf;
-                  }
-               });
+              } else {  
 
-                  
-               
               this.setState({
                 
                   error : false,
-                  searchedBooks : combinedResults,
+                  searchedBooks : results,
               })
+           
           }
           })
       } else 
@@ -73,7 +65,20 @@ componentDidMount() {
                   error : false
               })
           },3000)
-      }   
+      }
+
+      if(this.state.searchedBooks.length > 0) {
+        const onlysearchedbooks = this.state.searchedBooks.map((book) => {
+          if(book.id === this.state.books.id) {
+            book.shelf === this.state.books.shelf
+          }
+
+        })
+        this.setState({
+          searchedBooks: onlysearchedbooks,
+        })
+
+      }
   }
 
    updateShelf = (book, shelf)  => {
@@ -93,22 +98,21 @@ componentDidMount() {
       <div className="app">
   
           <Route exact path="/search" render={() =>
-            <div className="open-search">
-            <Link to='/search'
-             onClick={() => this.setState({ showSearchPage: true })}>Add a book</Link>
+            
               <div className="search-books">
              <div className="search-books-bar">
-               <Link to='/' className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</Link>
+               <Link to='/' className="close-search">Close</Link>
                <Search
                onUpdateShelf={this.updateShelf}
                searchContact = {this.searchContact}
-               books={this.state.searchedBooks}
+               myBooks={this.state.searchedBooks}
+               checkThumbnail={this.checkThumbnail}
                />
  
              </div>
          
            </div>
-          </div>    
+             
   }/>
   <Route exact path="/" render={() =>
     <div className="list-books">
@@ -121,13 +125,18 @@ componentDidMount() {
       <BooksList
       onUpdateShelf={this.updateShelf}
       myBooks={this.state.books}
-      checkThumbnail={this.checkThumbnail}
+      
       />
 
     </div>
-   
+    <div className="open-search">
+  <Link to='/search'>Add a book</Link>
+</div>
   </div>
-  </div>     
+  </div> 
+
+  
+
 }/>   
       </div>
     )
