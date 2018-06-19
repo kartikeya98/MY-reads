@@ -1,15 +1,22 @@
-import React ,{Component} from  'react';
+import React  from  'react';
 
 import MyBooks from './MyBooks';
 
 
-class BooksList extends Component {
+const BooksList = (props) => {
 
+        const curentlyReadingBooks = props.myBooks.filter(book => book.shelf === 'currentlyReading');
+        const readBooks = props.myBooks.filter(book => book.shelf === 'read');
+        const wantToReadBooks = props.myBooks.filter(book => book.shelf === 'wantToRead');
 
-    render() {
-        const curentlyReadingBooks = this.props.myBooks.filter(book => book.shelf === 'currentlyReading');
-        const readBooks = this.props.myBooks.filter(book => book.shelf === 'read');
-        const wantToReadBooks = this.props.myBooks.filter(book => book.shelf === 'wantToRead');
+        this.checkThumbnail = (book) => {
+            if(book.imageLinks) {
+                return book.imageLinks.thumbnail;
+            }
+            else {
+                return 'no image'
+            }
+            }
           
         return (
             <div>
@@ -17,8 +24,10 @@ class BooksList extends Component {
                  <div className="bookshelf">
             <h2 className="bookshelf-title">Currently Reading</h2>
                 <MyBooks 
-                    onUpdateShelf={this.props.onUpdateShelf}
+                    onUpdateShelf={props.onUpdateShelf}
                     myBooks={curentlyReadingBooks}
+                    checkThumbnail={this.checkThumbnail}
+
                 />
 
             </div>
@@ -27,8 +36,9 @@ class BooksList extends Component {
             <div className="bookshelf">
             <h2 className="bookshelf-title">wantToRead</h2>
                 <MyBooks 
-                    onUpdateShelf={this.props.onUpdateShelf}
+                    onUpdateShelf={props.onUpdateShelf}
                     myBooks={wantToReadBooks}
+                    checkThumbnail={this.checkThumbnail}
                 />
                 
             </div>
@@ -37,8 +47,10 @@ class BooksList extends Component {
             <div className="bookshelf">
             <h2 className="bookshelf-title">Read</h2>
                 <MyBooks 
-                    onUpdateShelf={this.props.onUpdateShelf}
+                    onUpdateShelf={props.onUpdateShelf}
                     myBooks={readBooks}
+                    checkThumbnail={this.checkThumbnail}
+
             
                 />
                 
@@ -52,6 +64,6 @@ class BooksList extends Component {
     }
 
 
-}
+
 
 export default BooksList;
